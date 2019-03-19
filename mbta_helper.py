@@ -3,7 +3,7 @@ MAPQUEST_BASE_URL = "http://open.mapquestapi.com/geocoding/v1/address"
 MBTA_BASE_URL = "https://api-v3.mbta.com/stops"
 
 # Your API KEYS (you need to use your own keys - very long random characters)
-MAPQUEST_API_KEY = ""
+MAPQUEST_API_KEY = "4hQccvGhtkRNlSh8G5QUQqkXGJpnlA4d"
 MBTA_API_KEY = "172ce4d9fbbe422496368d3b1ead4e18"
 
 # A little bit of scaffolding if you want to use it
@@ -25,18 +25,19 @@ def get_json(url):
     return response_data
 
 
-def get_lat_long("Fenway Park"):
+def get_lat_long(Location):
     """
     Given a place name or address, return a (latitude, longitude) tuple
     with the coordinates of the given place.
     See https://developer.mapquest.com/documentation/geocoding-api/address/get/
     for Mapquest Geocoding  API URL formatting requirements.
     """
-    url = MAPQUEST_BASE_URL+"?key={MAPQUEST_API_KEY}&inFormat=kvp&outFormat=json&location ={Location}&thumbMaps=false".format(MAPQUEST_API_KEY=MAPQUEST_API_KEY, Location=Location)
-    data= get_json(url)
-
-    latitude=data["results"]["displayLatLng"]["lat"]
-    longitude=data["results"]["displayLatLng"]["lng"]
+    url = '{}?key={}&location={}'.format(MAPQUEST_BASE_URL, MAPQUEST_API_KEY, Location)
+    print (url)
+    data = get_json(url)
+    import pprint
+    latitude=data["results"][0]["locations"][0]["displayLatLng"]["lat"]
+    longitude=data["results"][0]["locations"][0]["displayLatLng"]["lng"]
     return [latitude, longitude]
 
 
@@ -47,28 +48,29 @@ def get_nearest_station(latitude, longitude):
     See https://api-v3.mbta.com/docs/swagger/index.html#/Stop/ApiWeb_StopController_index for URL
     formatting requirements for the 'GET /stops' API.
     """
-    start_of_url = 'https://api-v3.mbta.com'
+    url="https://api-v3.mbta.com/stops?sort=distance&filter[latitude]={latitude}&filter[longitude]={longitude}".format(longitude=longitude, latitude=latitude)
+    data=get_json(url)
+    return (data['data'][0]['attributes']['name'], data['data'][0]['attributes']['wheelchair_boarding'])
 
-    pass
 
 
 def find_stop_near(place_name):
     """
     Given a place name or address, return the nearest MBTA stop and whether it is wheelchair accessible.
     """
-    find_stop=/data/{index}/attributes/wheelchair_boarding
+    lat_lon= get_lat_long(place_name)
+    latitude=lat_lon[0]
+    longitude=lat_lon[1]
+    return get_nearest_station(latitude, longitude)
 
 
-
-    pass
-
-
-def main():
+def main(Location):
     """
     You can call the functions here
     """
-    pass
+
+    return find_stop_near(Location)
 
 
 if __name__ == '__main__':
-    main()
+    main(Location)
