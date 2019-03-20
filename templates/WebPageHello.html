@@ -7,9 +7,16 @@
 <body>
     <h1>This is an MBTA stop locator:</h1>
     <p>Hello and Welcome to our app!</p>
-    <form action = "http://localhost:5000/nearest" method="post">
+    <form action = "http://localhost:5000/nearest" method="post" name="form">
         Where are you? <br>
-        <input size="35" name="Location">
+        <p>Address</p><br>
+        <input size="35" name="Address" placeholder="Address">
+        <p>City</p><br>
+        <input size="25" name="City" placeholder="City">
+        <p>State</p><br>
+        <input size="2" name = "State" maxlength="2">
+        <p>ZIP</p><br>
+        <input name="zip" type="tel" pattern="[0-9]{5}"  placeholder="Zip Code"/>
         <p>
            <input type="submit" name="Submit">
         </p>

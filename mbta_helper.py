@@ -50,9 +50,17 @@ def get_nearest_station(latitude, longitude):
     """
     url="https://api-v3.mbta.com/stops?sort=distance&filter[latitude]={latitude}&filter[longitude]={longitude}".format(longitude=longitude, latitude=latitude)
     data=get_json(url)
-    return (data['data'][0]['attributes']['name'], data['data'][0]['attributes']['wheelchair_boarding'])
+    if len(data['data'])==0:
+        return ()
+    if len(data['data'][0])==0:
+        return ()
+    if len(data['data'][0]['attributes'])==0:
+        return ()
+    if len(data['data'][0]['attributes']['name'])==0:
+        return ()
 
-
+    returnable=(data['data'][0]['attributes']['name'], data['data'][0]['attributes']['wheelchair_boarding'])
+    return returnable
 
 def find_stop_near(place_name):
     """
@@ -68,8 +76,9 @@ def main(Location):
     """
     You can call the functions here
     """
-
-    return find_stop_near(Location)
+    info=find_stop_near(Location)
+    print(info)
+    return info
 
 
 if __name__ == '__main__':
