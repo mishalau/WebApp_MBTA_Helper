@@ -4,22 +4,28 @@
     <meta charset="UTF-8">
     <title>Hello</title>
 </head>
+<style>
+img{
+ width: 25%;
+}
+</style>
 <body>
     <h1>This is an MBTA stop locator:</h1>
-    <p>Hello and Welcome to our app!</p>
-    <form action = "http://localhost:5000/nearest" method="post" name="form">
-        Where are you? <br>
-        <p>Address</p><br>
+    <img src="https://www.logolynx.com/images/logolynx/18/18e62c296bafb27f0ebc9f9ff78fe787.jpeg" alt="MBTA PIC">
+    <h1 style="color:Crimson;">Hello and Welcome to our app!</h1>
+    <form style="color:DarkMagenta;" action = "http://localhost:5000/nearest" method="post" name="form">
+        <h2>Where are you?</h2> <br>
+        <h2>Address</h2><br>
         <input size="35" name="Address" placeholder="Address">
-        <p>City</p><br>
+        <h2>City</h2><br>
         <input size="25" name="City" placeholder="City">
-        <p>State</p><br>
+        <h2>State</h2><br>
         <input size="2" name = "State" maxlength="2">
-        <p>ZIP</p><br>
+        <h2>ZIP</h2><br>
         <input name="zip" type="tel" pattern="[0-9]{5}"  placeholder="Zip Code"/>
-        <p>
+        <h2>
            <input type="submit" name="Submit">
-        </p>
+        </h2>
     </form>
 </body>
 </html>
